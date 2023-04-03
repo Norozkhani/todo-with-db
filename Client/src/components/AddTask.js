@@ -11,18 +11,19 @@ const AddTask = ({ taskLen, createTask }) => {
   const handleClose = () => setShowAddTask(false);
 
   const submitNewTask = (e) => {
-    e.preventDefault();
-    if (e.target.text.value && e.target.category.value) {
+    const textInput = document.querySelector("#text");
+    const categoryInput = document.querySelector("#category");
+
+    if (textInput.value && categoryInput.value) {
       createTask({
         id: ++taskLen,
-        text: e.target.text.value,
-        category: e.target.category.value,
+        text: textInput.value,
+        category: categoryInput.value,
         completed: false,
       });
 
-      Array.from(e.target.querySelectorAll("input")).map(
-        (input) => (input.value = "")
-      );
+      textInput.value = "";
+      categoryInput.value = "";
     } else {
       e.target.text.value
         ? setShowErrorMsg((prev) => ({ ...prev, textErr: false }))
@@ -44,9 +45,14 @@ const AddTask = ({ taskLen, createTask }) => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitNewTask}>
-            <input type="text" name="text" placeholder="Title" />
+            <input type="text" id="text" name="text" placeholder="Title" />
             {showErrorMsg.textErr && <span>Please write a title</span>}
-            <input type="text" name="category" placeholder="Category" />
+            <input
+              type="text"
+              id="category"
+              name="category"
+              placeholder="Category"
+            />
             {showErrorMsg.categoryErr && <span>Please write a category</span>}
           </form>
         </Modal.Body>
