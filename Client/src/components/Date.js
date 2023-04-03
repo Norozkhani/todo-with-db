@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../styles/date.css";
 
 const Date = () => {
   const monthName = [

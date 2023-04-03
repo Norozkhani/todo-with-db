@@ -1,56 +1,115 @@
 import { useState } from "react";
-import "./App.css";
-import axios from "axios";
+import DateTime from "./components/Date";
+import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
+import EditTask from "./components/EditTask";
 
 function App() {
-  const [itemText, setItemText] = useState("");
-  //Add new item to database (NOT FINISHED VIDEO AT 24:30)
-  const addItem = async () => {
-    try {
-      const res = await axios.post();
-    } catch (err) {
-      console.log(err);
-    }
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      text: "Upload 1099-R to TurboTax",
+      category: "Finance",
+      completed: false,
+    },
+    {
+      id: 2,
+      text: "Print parking passes",
+      category: "Finance",
+      completed: false,
+    },
+    {
+      id: 3,
+      text: "Submit 2019 tax return",
+      category: "Wedding",
+      completed: false,
+    },
+    {
+      id: 4,
+      text: "Sign contract, send back",
+      category: "Freelance",
+      completed: false,
+    },
+    {
+      id: 5,
+      text: "Hand sanitizer",
+      category: "Shopping List",
+      completed: false,
+    },
+    {
+      id: 6,
+      text: "Check on FedEx Order",
+      category: "Freelance",
+      completed: true,
+    },
+    {
+      id: 7,
+      text: "Look at new plugins",
+      category: "Freelance",
+      completed: true,
+    },
+    {
+      id: 8,
+      text: "Respond to catering company",
+      category: "Freelance",
+      completed: true,
+    },
+    {
+      id: 9,
+      text: "Reschedule morning coffee",
+      category: "Freelance",
+      completed: true,
+    },
+    {
+      id: 10,
+      text: "Check the latest on Community",
+      category: "Freelance",
+      completed: true,
+    },
+  ]);
+  const [editTask, setEditTask] = useState([]);
+  const handleCheck = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
-
+  const createTask = (newTask) => {
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  };
+  const activateEditTask = (id) => {
+    setEditTask(tasks.filter((arr) => arr.id === id));
+  };
+  const replaceTask = (editedTask) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === editedTask.id ? editedTask : task))
+    );
+    setEditTask([]);
+  };
+  const deleteTask = (id) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setEditTask([]);
+  };
   return (
     <div className="App">
-      <h1>Todo List</h1>
-      <form className="form">
-        <input
-          type="text"
-          placeholder="Add Todo Item"
-          onChange={(e) => {
-            setItemText(e.target.value);
-          }}
-          value={itemText}
+      <section>
+        <DateTime />
+        <Tasks
+          tasks={tasks}
+          handleCheck={handleCheck}
+          activateEditTask={activateEditTask}
         />
-        <button type="submit">Add</button>
-      </form>
-      <div className="todo-list-Items">
-        <div className="todo-item">
-          <p className="item-content">This is item 1</p>
-          <button className="update-item">Update</button>
-          <button className="delete-item">Delete</button>
-        </div>
-        <div className="todo-item">
-          <p className="item-content">This is item 2</p>
-          <button className="update-item">Update</button>
-          <button className="delete-item">Delete</button>
-        </div>
-        <div className="todo-item">
-          <p className="item-content">This is item 3</p>
-          <button className="update-item">Update</button>
-          <button className="delete-item">Delete</button>
-        </div>
-        <div className="todo-item">
-          <p className="item-content">This is item 4</p>
-          <button className="update-item">Update</button>
-          <button className="delete-item">Delete</button>
-        </div>
-      </div>
+        <AddTask taskLen={tasks.length} createTask={createTask} />
+        {editTask.length > 0 && (
+          <EditTask
+            editTask={editTask}
+            replaceTask={replaceTask}
+            deleteTask={deleteTask}
+          />
+        )}
+      </section>
     </div>
   );
 }
-
 export default App;
