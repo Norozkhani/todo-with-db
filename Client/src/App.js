@@ -3,6 +3,7 @@ import DateTime from "./components/Date";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
+import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
   const [tasks, setTasks] = useState([

@@ -1,3 +1,4 @@
+import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
 
 const AddTask = ({ taskLen, createTask }) => {
@@ -6,6 +7,8 @@ const AddTask = ({ taskLen, createTask }) => {
     textErr: false,
     categoryErr: false,
   });
+
+  const handleClose = () => setShowAddTask(false);
 
   const submitNewTask = (e) => {
     e.preventDefault();
@@ -33,20 +36,29 @@ const AddTask = ({ taskLen, createTask }) => {
   return (
     <div>
       {!showAddTask && (
-        <button onClick={() => setShowAddTask(true)}>Add Task</button>
+        <Button onClick={() => setShowAddTask(true)}>Add Task</Button>
       )}
-      {showAddTask && (
-        <section>
+      <Modal show={showAddTask} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <form onSubmit={submitNewTask}>
-            <button onClick={() => setShowAddTask(false)}>Cancel</button>
             <input type="text" name="text" placeholder="Title" />
             {showErrorMsg.textErr && <span>Please write a title</span>}
             <input type="text" name="category" placeholder="Category" />
             {showErrorMsg.categoryErr && <span>Please write a category</span>}
-            <button type="submit">Add</button>
           </form>
-        </section>
-      )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={submitNewTask}>
+            Add
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -6,7 +6,12 @@ const Task = ({ task, handleCheck, activateEditTask }) => {
         <p>{task.category}</p>
       </div>
       <div className="edit_CheckWrapper">
-        <button onClick={() => activateEditTask(task.id)}>Edit</button>
+        <button
+          className=" btn btn-primary"
+          onClick={() => activateEditTask(task.id)}
+        >
+          Edit
+        </button>
         <input
           type="checkbox"
           name="completed"
