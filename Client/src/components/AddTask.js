@@ -33,12 +33,12 @@ const AddTask = ({ taskLen, createTask }) => {
   return (
     <div>
       {!showAddTask && (
-        <button onClick={() => setShowAddTask(true)}>plus</button>
+        <button onClick={() => setShowAddTask(true)}>Add Task</button>
       )}
       {showAddTask && (
         <section>
           <form onSubmit={submitNewTask}>
-            <button onClick={() => setShowAddTask(false)}>To go back</button>
+            <button onClick={() => setShowAddTask(false)}>Cancel</button>
             <input type="text" name="text" placeholder="Title" />
             {showErrorMsg.textErr && <span>Please write a title</span>}
             <input type="text" name="category" placeholder="Category" />

@@ -1,17 +1,36 @@
 .App {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 500px;
-  margin: 50px auto;
-  padding: 10px;
+  justify-content: center;
   border-radius: 8px;
+  background-color: aliceblue;
+}
+
+.App_Wrapper {
+  padding: 3% 12%;
+}
+
+button {
+  border-radius: 5px;
+}
+
+li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.edit_CheckWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  gap: 1.2rem;
 }
 
 .App h1 {
   text-align: center;
 }
-
+/* 
 .form {
   display: flex;
   justify-content: space-between;
@@ -71,4 +90,4 @@
 }
 .item-content {
   width: 60%;
-}
+} */

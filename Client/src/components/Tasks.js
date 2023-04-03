@@ -1,4 +1,5 @@
 import Task from "./Task";
+import "../App.css";
 
 const Tasks = ({ tasks, handleCheck, activateEditTask }) => {
   return (

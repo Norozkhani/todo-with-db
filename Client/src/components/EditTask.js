@@ -22,7 +22,11 @@ const EditTask = ({ editTask, replaceTask, deleteTask }) => {
           defaultValue={editTask[0].category}
         />
         <button type="submit">Save</button>
-        <button type="button" onClick={() => deleteTask(editTask[0].id)}>
+        <button
+          className="delete-item"
+          type="button"
+          onClick={() => deleteTask(editTask[0].id)}
+        >
           Delete
         </button>
       </form>

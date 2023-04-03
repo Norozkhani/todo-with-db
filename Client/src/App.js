@@ -92,23 +92,25 @@ function App() {
     setEditTask([]);
   };
   return (
-    <div className="App">
-      <section>
-        <DateTime />
-        <Tasks
-          tasks={tasks}
-          handleCheck={handleCheck}
-          activateEditTask={activateEditTask}
-        />
-        <AddTask taskLen={tasks.length} createTask={createTask} />
-        {editTask.length > 0 && (
-          <EditTask
-            editTask={editTask}
-            replaceTask={replaceTask}
-            deleteTask={deleteTask}
+    <div className="App_Wrapper">
+      <div className="App">
+        <section>
+          <DateTime />
+          <AddTask taskLen={tasks.length} createTask={createTask} />
+          {editTask.length > 0 && (
+            <EditTask
+              editTask={editTask}
+              replaceTask={replaceTask}
+              deleteTask={deleteTask}
+            />
+          )}
+          <Tasks
+            tasks={tasks}
+            handleCheck={handleCheck}
+            activateEditTask={activateEditTask}
           />
-        )}
-      </section>
+        </section>
+      </div>
     </div>
   );
 }
