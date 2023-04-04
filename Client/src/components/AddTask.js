@@ -25,10 +25,10 @@ const AddTask = ({ taskLen, createTask }) => {
       textInput.value = "";
       categoryInput.value = "";
     } else {
-      e.target.text.value
+      textInput.value
         ? setShowErrorMsg((prev) => ({ ...prev, textErr: false }))
         : setShowErrorMsg((prev) => ({ ...prev, textErr: true }));
-      e.target.category.value
+      categoryInput.value
         ? setShowErrorMsg((prev) => ({ ...prev, categoryErr: false }))
         : setShowErrorMsg((prev) => ({ ...prev, categoryErr: true }));
     }
