@@ -8,9 +8,16 @@ const AddTask = ({ taskLen, createTask }) => {
     categoryErr: false,
   });
 
-  const handleClose = () => setShowAddTask(false);
+  const handleClose = () => {
+    setShowAddTask(false);
+    setShowErrorMsg({
+      textErr: false,
+      categoryErr: false,
+    });
+  };
 
   const submitNewTask = (e) => {
+    e.preventDefault();
     const textInput = document.querySelector("#text");
     const categoryInput = document.querySelector("#category");
 
@@ -24,6 +31,7 @@ const AddTask = ({ taskLen, createTask }) => {
 
       textInput.value = "";
       categoryInput.value = "";
+      handleClose();
     } else {
       textInput.value
         ? setShowErrorMsg((prev) => ({ ...prev, textErr: false }))
@@ -39,7 +47,7 @@ const AddTask = ({ taskLen, createTask }) => {
       {!showAddTask && (
         <Button onClick={() => setShowAddTask(true)}>Add Task</Button>
       )}
-      <Modal show={showAddTask} onHide={handleClose}>
+      <Modal centered show={showAddTask} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Task</Modal.Title>
         </Modal.Header>
