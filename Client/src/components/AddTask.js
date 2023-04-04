@@ -1,4 +1,4 @@
-import { Modal, Button } from "react-bootstrap";
+import { Button, Modal, Form, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 
 const AddTask = ({ taskLen, createTask }) => {
@@ -47,24 +47,43 @@ const AddTask = ({ taskLen, createTask }) => {
       {!showAddTask && (
         <Button onClick={() => setShowAddTask(true)}>Add Task</Button>
       )}
-      <Modal centered show={showAddTask} onHide={handleClose}>
+      <Modal
+        className=""
+        centered
+        size="lg"
+        show={showAddTask}
+        onHide={handleClose}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Add Task</Modal.Title>
+          <Modal.Title className="text-center">Add Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={submitNewTask}>
-            <input type="text" id="text" name="text" placeholder="Title" />
-            {showErrorMsg.textErr && <span>Please write a title</span>}
+        <Modal.Body className="d-flex flex-column align-items-center">
+          <div className="mb-3">
+            {showErrorMsg.textErr && (
+              <div className="mb-2 text-danger">Please write a title</div>
+            )}
+            <input
+              type="text"
+              id="text"
+              name="text"
+              placeholder="Title"
+              className="form-control form-control-lg"
+            />
+          </div>
+          <div className="mb-3">
+            {showErrorMsg.categoryErr && (
+              <div className="mb-2 text-danger">Please write a category</div>
+            )}
             <input
               type="text"
               id="category"
               name="category"
               placeholder="Category"
+              className="form-control form-control-lg"
             />
-            {showErrorMsg.categoryErr && <span>Please write a category</span>}
-          </form>
+          </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="d-flex justify-content-center">
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
