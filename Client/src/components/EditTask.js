@@ -1,4 +1,12 @@
-const EditTask = ({ editTask, replaceTask, deleteTask }) => {
+import { Button, Modal, Form } from "react-bootstrap";
+
+const EditTask = ({
+  editTask,
+  replaceTask,
+  deleteTask,
+  showModal,
+  setShowModal,
+}) => {
   const submitEditTask = (e) => {
     e.preventDefault();
     if (e.target.text.value && e.target.category.value) {
@@ -10,27 +18,55 @@ const EditTask = ({ editTask, replaceTask, deleteTask }) => {
       });
       e.target.text.value = "";
       e.target.category.value = "";
+      setShowModal(false); // close the modal after submitting
     }
   };
+
+  const handleDeleteTask = () => {
+    deleteTask(editTask[0].id);
+    setShowModal(false); // close the modal after deleting
+  };
+
   return (
-    <section>
-      <form onSubmit={submitEditTask}>
-        <input type="text" name="text" defaultValue={editTask[0].text} />
-        <input
-          type="text"
-          name="category"
-          defaultValue={editTask[0].category}
-        />
-        <button type="submit">Save</button>
-        <button
-          className="delete-item"
-          type="button"
-          onClick={() => deleteTask(editTask[0].id)}
-        >
-          Delete
-        </button>
-      </form>
-    </section>
+    <>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Task</Modal.Title>
+        </Modal.Header>
+        <form id="editTaskForm" onSubmit={submitEditTask}>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Task Text</Form.Label>
+              <Form.Control
+                type="text"
+                name="text"
+                defaultValue={editTask[0].text}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Task Category</Form.Label>
+              <Form.Control
+                type="text"
+                name="category"
+                defaultValue={editTask[0].category}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary">
+              Save
+            </Button>
+            <Button variant="danger" onClick={handleDeleteTask}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
   );
 };
+
 export default EditTask;

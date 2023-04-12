@@ -2,7 +2,6 @@ import { useState } from "react";
 import DateTime from "./components/Date";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
-import EditTask from "./components/EditTask";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
@@ -99,7 +98,7 @@ function App() {
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
           {editTask.length > 0 && (
-            <EditTask
+            <task
               editTask={editTask}
               replaceTask={replaceTask}
               deleteTask={deleteTask}

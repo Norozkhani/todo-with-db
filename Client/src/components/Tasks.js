@@ -1,7 +1,13 @@
 import Task from "./Task";
 import "../App.css";
 
-const Tasks = ({ tasks, handleCheck, activateEditTask }) => {
+const Tasks = ({
+  tasks,
+  handleCheck,
+  activateEditTask,
+  replaceTask,
+  deleteTask,
+}) => {
   return (
     <div>
       <h2>Incomplete</h2>
@@ -14,6 +20,8 @@ const Tasks = ({ tasks, handleCheck, activateEditTask }) => {
               key={task.id}
               handleCheck={handleCheck}
               activateEditTask={activateEditTask}
+              replaceTask={replaceTask}
+              deleteTask={deleteTask}
             />
           ))}
       </ul>
@@ -27,10 +35,13 @@ const Tasks = ({ tasks, handleCheck, activateEditTask }) => {
               key={task.id}
               handleCheck={handleCheck}
               activateEditTask={activateEditTask}
+              replaceTask={replaceTask}
+              deleteTask={deleteTask}
             />
           ))}
       </ul>
     </div>
   );
 };
+
 export default Tasks;
