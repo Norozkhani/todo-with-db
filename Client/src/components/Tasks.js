@@ -20,8 +20,6 @@ const Tasks = ({
               key={task.id}
               handleCheck={handleCheck}
               activateEditTask={activateEditTask}
-              replaceTask={replaceTask}
-              deleteTask={deleteTask}
             />
           ))}
       </ul>
@@ -35,13 +33,10 @@ const Tasks = ({
               key={task.id}
               handleCheck={handleCheck}
               activateEditTask={activateEditTask}
-              replaceTask={replaceTask}
-              deleteTask={deleteTask}
             />
           ))}
       </ul>
     </div>
   );
 };
-
 export default Tasks;

@@ -1,5 +1,5 @@
-import { Button } from "react-bootstrap";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 import EditTask from "./EditTask";
 
 const Task = ({
@@ -9,8 +9,12 @@ const Task = ({
   replaceTask,
   deleteTask,
 }) => {
-  const [showModal, setShowModal] = useState(false);
-  const handleShowModal = () => setShowModal(true);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleShowEditModal = () => {
+    activateEditTask(task.id);
+    setShowEditModal(true);
+  };
 
   return (
     <li>
@@ -19,22 +23,7 @@ const Task = ({
         <p>{task.category}</p>
       </div>
       <div className="edit_CheckWrapper">
-        <Button
-          variant="primary"
-          onClick={() => {
-            activateEditTask(task.id);
-            handleShowModal();
-          }}
-        >
-          Edit Task
-        </Button>
-        <EditTask
-          editTask={[task]}
-          replaceTask={replaceTask}
-          deleteTask={deleteTask}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
+        <Button onClick={handleShowEditModal}>Edit</Button>
         <input
           type="checkbox"
           name="completed"
@@ -43,6 +32,14 @@ const Task = ({
           onChange={() => handleCheck(task.id)}
         />
       </div>
+      <EditTask
+        editTask={[task]}
+        replaceTask={replaceTask}
+        deleteTask={deleteTask}
+        show={showEditModal}
+        onHide={() => setShowEditModal(false)}
+        setShow={setShowEditModal}
+      />
     </li>
   );
 };

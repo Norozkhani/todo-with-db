@@ -2,9 +2,13 @@ import { useState } from "react";
 import DateTime from "./components/Date";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import EditTask from "./components/EditTask";
+import Task from "./components/Task";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
+  const [activeEditTask, setActiveEditTask] = useState(null);
+
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -79,17 +83,19 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
   const activateEditTask = (id) => {
-    setEditTask(tasks.filter((arr) => arr.id === id));
+    setActiveEditTask(id);
   };
+
   const replaceTask = (editedTask) => {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === editedTask.id ? editedTask : task))
+    const updatedTasks = tasks.map((task) =>
+      task.id === editedTask.id ? editedTask : task
     );
-    setEditTask([]);
+    setTasks(updatedTasks);
   };
+
   const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-    setEditTask([]);
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
   };
   return (
     <div className="App_Wrapper">
@@ -97,13 +103,28 @@ function App() {
         <section>
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
-          {editTask.length > 0 && (
-            <task
-              editTask={editTask}
+          {tasks.map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+              tasks={tasks}
+              handleCheck={handleCheck}
+              activateEditTask={activateEditTask}
               replaceTask={replaceTask}
               deleteTask={deleteTask}
             />
-          )}
+          ))}
+          <EditTask
+            editTask={
+              activeEditTask
+                ? tasks.filter((task) => task.id === activeEditTask)
+                : []
+            }
+            replaceTask={replaceTask}
+            deleteTask={deleteTask}
+            onHide={() => setActiveEditTask(null)}
+          />
+
           <Tasks
             tasks={tasks}
             handleCheck={handleCheck}

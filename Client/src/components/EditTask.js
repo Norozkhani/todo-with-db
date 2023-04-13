@@ -1,12 +1,15 @@
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const EditTask = ({
   editTask,
   replaceTask,
   deleteTask,
-  showModal,
-  setShowModal,
+  show,
+  onHide,
+  setShow,
 }) => {
+  const handleClose = () => setShow(false);
+
   const submitEditTask = (e) => {
     e.preventDefault();
     if (e.target.text.value && e.target.category.value) {
@@ -18,54 +21,45 @@ const EditTask = ({
       });
       e.target.text.value = "";
       e.target.category.value = "";
-      setShowModal(false); // close the modal after submitting
     }
-  };
-
-  const handleDeleteTask = () => {
-    deleteTask(editTask[0].id);
-    setShowModal(false); // close the modal after deleting
+    onHide();
   };
 
   return (
-    <>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Task</Modal.Title>
-        </Modal.Header>
-        <form id="editTaskForm" onSubmit={submitEditTask}>
+    <section>
+      <Modal show={show} onHide={onHide}>
+        <form onSubmit={submitEditTask}>
+          <Modal.Header>
+            <input
+              type="text"
+              name="text"
+              defaultValue={editTask.length > 0 ? editTask[0].text : ""}
+            />
+          </Modal.Header>
           <Modal.Body>
-            <Form.Group>
-              <Form.Label>Task Text</Form.Label>
-              <Form.Control
-                type="text"
-                name="text"
-                defaultValue={editTask[0].text}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Task Category</Form.Label>
-              <Form.Control
-                type="text"
-                name="category"
-                defaultValue={editTask[0].category}
-              />
-            </Form.Group>
+            <input
+              type="text"
+              name="category"
+              defaultValue={editTask.length > 0 ? editTask[0].category : ""}
+            />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary">
-              Save
-            </Button>
-            <Button variant="danger" onClick={handleDeleteTask}>
+            <Button type="submit">Save</Button>
+            <Button
+              variant="danger"
+              className="delete-item"
+              type="button"
+              onClick={() => {
+                handleClose();
+                deleteTask(editTask[0].id);
+              }}
+            >
               Delete
             </Button>
           </Modal.Footer>
         </form>
       </Modal>
-    </>
+    </section>
   );
 };
 
