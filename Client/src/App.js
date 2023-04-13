@@ -1,6 +1,5 @@
 import { useState } from "react";
 import DateTime from "./components/Date";
-import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
 import Task from "./components/Task";
@@ -71,7 +70,8 @@ function App() {
       completed: true,
     },
   ]);
-  const [editTask, setEditTask] = useState([]);
+  const completedTasks = tasks.filter((task) => task.completed);
+  const incompleteTasks = tasks.filter((task) => !task.completed);
   const handleCheck = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -103,17 +103,32 @@ function App() {
         <section>
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
-          {tasks.map((task) => (
-            <Task
-              key={task.id}
-              task={task}
-              tasks={tasks}
-              handleCheck={handleCheck}
-              activateEditTask={activateEditTask}
-              replaceTask={replaceTask}
-              deleteTask={deleteTask}
-            />
-          ))}
+          <h2>Completed</h2>
+          <ul>
+            {completedTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                handleCheck={handleCheck}
+                activateEditTask={activateEditTask}
+                replaceTask={replaceTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </ul>
+          <h2>Incomplete</h2>
+          <ul>
+            {incompleteTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                handleCheck={handleCheck}
+                activateEditTask={activateEditTask}
+                replaceTask={replaceTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </ul>
           <EditTask
             editTask={
               activeEditTask
@@ -123,12 +138,6 @@ function App() {
             replaceTask={replaceTask}
             deleteTask={deleteTask}
             onHide={() => setActiveEditTask(null)}
-          />
-
-          <Tasks
-            tasks={tasks}
-            handleCheck={handleCheck}
-            activateEditTask={activateEditTask}
           />
         </section>
       </div>

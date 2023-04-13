@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import EditTask from "./EditTask";
+import "../App.css";
 
 const Task = ({
   task,
