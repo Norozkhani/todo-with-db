@@ -25,11 +25,13 @@ li {
   justify-content: space-between;
   padding: 2rem;
   gap: 1.2rem;
+  margin-left: auto;
 }
 
 .App h1 {
   text-align: center;
 }
+
 /* 
 .form {
   display: flex;

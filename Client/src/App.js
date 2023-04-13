@@ -104,7 +104,7 @@ function App() {
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
           <h2>Incomplete</h2>
-          <ul>
+          <ul className="task-list-wrapper">
             {incompleteTasks.map((task) => (
               <Task
                 key={task.id}
@@ -117,7 +117,7 @@ function App() {
             ))}
           </ul>
           <h2>Completed</h2>
-          <ul>
+          <ul className="task-list-wrapper">
             {completedTasks.map((task) => (
               <Task
                 key={task.id}
