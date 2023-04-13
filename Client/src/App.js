@@ -103,19 +103,6 @@ function App() {
         <section>
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
-          <h2>Completed</h2>
-          <ul>
-            {completedTasks.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                handleCheck={handleCheck}
-                activateEditTask={activateEditTask}
-                replaceTask={replaceTask}
-                deleteTask={deleteTask}
-              />
-            ))}
-          </ul>
           <h2>Incomplete</h2>
           <ul>
             {incompleteTasks.map((task) => (
@@ -129,6 +116,20 @@ function App() {
               />
             ))}
           </ul>
+          <h2>Completed</h2>
+          <ul>
+            {completedTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                handleCheck={handleCheck}
+                activateEditTask={activateEditTask}
+                replaceTask={replaceTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </ul>
+
           <EditTask
             editTask={
               activeEditTask
