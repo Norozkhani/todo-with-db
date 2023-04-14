@@ -2,7 +2,9 @@
   display: flex;
   justify-content: center;
   border-radius: 8px;
-  background-color: aliceblue;
+  background-color: #fef8f9;
+  padding: 10px;
+  border-style: outset;
 }
 
 .App_Wrapper {
@@ -32,6 +34,10 @@ li {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+  padding: 10px;
+}
 /* 
 .form {
   display: flex;
