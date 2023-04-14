@@ -18,7 +18,7 @@ const Task = ({
   };
 
   return (
-    <li className="task-wrapper">
+    <li className="task-wrapper d-flex justify-content-center align">
       <div className="task_TextWrapper">
         <h4>{task.text}</h4>
         <p>{task.category}</p>

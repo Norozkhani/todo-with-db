@@ -29,6 +29,7 @@ li {
   margin: 0.5rem;
   padding: 1rem;
   width: 90%;
+  border-radius: 10px;
 }
 
 .edit_CheckWrapper {

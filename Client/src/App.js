@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import DateTime from "./components/Date";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
   const [activeEditTask, setActiveEditTask] = useState(null);
+  const memoizedParticle = useMemo(() => <Particle />, []);
 
   const [tasks, setTasks] = useState([
     {
@@ -142,9 +143,7 @@ function App() {
             onHide={() => setActiveEditTask(null)}
           />
         </section>
-        <div className="particlesContainer">
-          <Particle />
-        </div>
+        <div className="particlesContainer">{memoizedParticle}</div>
       </div>
     </div>
   );
