@@ -1,11 +1,13 @@
 import { useState } from "react";
 import DateTime from "./components/Date";
-import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
+import Task from "./components/Task";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
+  const [activeEditTask, setActiveEditTask] = useState(null);
+
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -68,7 +70,8 @@ function App() {
       completed: true,
     },
   ]);
-  const [editTask, setEditTask] = useState([]);
+  const completedTasks = tasks.filter((task) => task.completed);
+  const incompleteTasks = tasks.filter((task) => !task.completed);
   const handleCheck = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -80,17 +83,19 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
   const activateEditTask = (id) => {
-    setEditTask(tasks.filter((arr) => arr.id === id));
+    setActiveEditTask(id);
   };
+
   const replaceTask = (editedTask) => {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === editedTask.id ? editedTask : task))
+    const updatedTasks = tasks.map((task) =>
+      task.id === editedTask.id ? editedTask : task
     );
-    setEditTask([]);
+    setTasks(updatedTasks);
   };
+
   const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-    setEditTask([]);
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
   };
   return (
     <div className="App_Wrapper">
@@ -98,17 +103,42 @@ function App() {
         <section>
           <DateTime />
           <AddTask taskLen={tasks.length} createTask={createTask} />
-          {editTask.length > 0 && (
-            <EditTask
-              editTask={editTask}
-              replaceTask={replaceTask}
-              deleteTask={deleteTask}
-            />
-          )}
-          <Tasks
-            tasks={tasks}
-            handleCheck={handleCheck}
-            activateEditTask={activateEditTask}
+          <h2>Incomplete</h2>
+          <ul className="task-list-wrapper">
+            {incompleteTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                handleCheck={handleCheck}
+                activateEditTask={activateEditTask}
+                replaceTask={replaceTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </ul>
+          <h2>Completed</h2>
+          <ul className="task-list-wrapper">
+            {completedTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                handleCheck={handleCheck}
+                activateEditTask={activateEditTask}
+                replaceTask={replaceTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </ul>
+
+          <EditTask
+            editTask={
+              activeEditTask
+                ? tasks.filter((task) => task.id === activeEditTask)
+                : []
+            }
+            replaceTask={replaceTask}
+            deleteTask={deleteTask}
+            onHide={() => setActiveEditTask(null)}
           />
         </section>
       </div>

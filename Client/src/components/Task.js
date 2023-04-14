@@ -1,4 +1,22 @@
-const Task = ({ task, handleCheck, activateEditTask }) => {
+import { useState } from "react";
+import { Button } from "react-bootstrap";
+import EditTask from "./EditTask";
+import "../App.css";
+
+const Task = ({
+  task,
+  handleCheck,
+  activateEditTask,
+  replaceTask,
+  deleteTask,
+}) => {
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleShowEditModal = () => {
+    activateEditTask(task.id);
+    setShowEditModal(true);
+  };
+
   return (
     <li>
       <div className="task_TextWrapper">
@@ -6,12 +24,7 @@ const Task = ({ task, handleCheck, activateEditTask }) => {
         <p>{task.category}</p>
       </div>
       <div className="edit_CheckWrapper">
-        <button
-          className=" btn btn-primary"
-          onClick={() => activateEditTask(task.id)}
-        >
-          Edit
-        </button>
+        <Button onClick={handleShowEditModal}>Edit</Button>
         <input
           type="checkbox"
           name="completed"
@@ -20,7 +33,16 @@ const Task = ({ task, handleCheck, activateEditTask }) => {
           onChange={() => handleCheck(task.id)}
         />
       </div>
+      <EditTask
+        editTask={[task]}
+        replaceTask={replaceTask}
+        deleteTask={deleteTask}
+        show={showEditModal}
+        onHide={() => setShowEditModal(false)}
+        setShow={setShowEditModal}
+      />
     </li>
   );
 };
+
 export default Task;
