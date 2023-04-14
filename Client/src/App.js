@@ -2,6 +2,7 @@ import { useState } from "react";
 import DateTime from "./components/Date";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
+import Particle from "./components/Particle";
 import Task from "./components/Task";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -98,7 +99,7 @@ function App() {
     setTasks(updatedTasks);
   };
   return (
-    <div className="App_Wrapper">
+    <div className="App_Wrapper d-flex align-items-center justify-content-center">
       <div className="App">
         <section>
           <DateTime />
@@ -141,6 +142,9 @@ function App() {
             onHide={() => setActiveEditTask(null)}
           />
         </section>
+        <div className="particlesContainer">
+          <Particle />
+        </div>
       </div>
     </div>
   );

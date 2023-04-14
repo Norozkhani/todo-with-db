@@ -18,9 +18,9 @@ const Task = ({
   };
 
   return (
-    <li>
+    <li className="task-wrapper">
       <div className="task_TextWrapper">
-        <h3>{task.text}</h3>
+        <h4>{task.text}</h4>
         <p>{task.category}</p>
       </div>
       <div className="edit_CheckWrapper">
