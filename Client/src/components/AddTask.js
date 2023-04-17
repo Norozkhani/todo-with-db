@@ -43,7 +43,7 @@ const AddTask = ({ taskLen, createTask }) => {
   };
 
   return (
-    <div>
+    <div className="d-flex justify-content-center">
       {!showAddTask && (
         <Button onClick={() => setShowAddTask(true)}>Add Task</Button>
       )}
