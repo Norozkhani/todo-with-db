@@ -103,7 +103,9 @@ function App() {
     <div className="App_Wrapper d-flex align-items-center justify-content-center">
       <div className="App">
         <section>
-          <DateTime />
+          <div className="d-flex justify-content-center">
+            <DateTime />
+          </div>
           <AddTask taskLen={tasks.length} createTask={createTask} />
           <h2>Incomplete</h2>
           <ul className="task-list-wrapper">

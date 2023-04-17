@@ -16,6 +16,10 @@ button {
   border-radius: 5px;
 }
 
+.editBtn {
+  height: 40px;
+}
+
 li {
   list-style-type: none;
   display: flex;
@@ -24,12 +28,21 @@ li {
 }
 
 .task-wrapper {
-  box-shadow: 0 0 20px rgba(26, 26, 26, 0.052), 0 0 40px rgba(26, 26, 26, 0.035),
-    0 0 80px rgba(26, 26, 26, 0.1);
-  margin: 0.5rem;
+  box-shadow: 0 0 20px rgba(26, 26, 26, 0.025), 0 0 40px rgba(26, 26, 26, 0.035),
+    0 0 80px rgba(26, 26, 26, 0.041);
+  margin: 0.8rem;
   padding: 1rem;
   width: 90%;
   border-radius: 10px;
+}
+.task-wrapper:hover {
+  box-shadow: 0 0 20px rgba(26, 26, 26, 0.052), 0 0 40px rgba(26, 26, 26, 0.13),
+    0 0 80px rgba(26, 26, 26, 0.108);
+  margin: 0.7rem;
+  padding: 1rem;
+  width: 90%;
+  border-radius: 10px;
+  color: rgb(150, 24, 129);
 }
 
 .edit_CheckWrapper {
@@ -61,65 +74,3 @@ h2 {
   height: 100%;
   z-index: -1;
 }
-
-/* 
-.form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.form input[type="text"] {
-  padding: 10px;
-  width: 85%;
-  border: 1px solid #eee;
-  border-radius: 6px;
-}
-.form button[type="submit"]:focus {
-  outline: none;
-}
-.form input[type="text"]:focus {
-  outline: none;
-}
-.form button[type="submit"] {
-  background-color: #008080;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.todo-list-Items {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.todo-item button {
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  padding: 8px;
-}
-.todo-item button:focus {
-  outline: none;
-}
-.update-item {
-  background-color: goldenrod;
-  color: #fff;
-}
-.delete-item {
-  background-color: purple;
-  color: #ffff;
-}
-.item-content {
-  width: 60%;
-} */
