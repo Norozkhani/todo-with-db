@@ -27,6 +27,7 @@ app.use(morgan("tiny"));
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/tasks", async (req, res) => {
   const tasks = await Task.findAll();
