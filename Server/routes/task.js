@@ -1,5 +1,4 @@
 const init = (db, app) => {
-  console.log(db);
   app.get("/test", (req, res) => {
     res.send("Banana");
   });
