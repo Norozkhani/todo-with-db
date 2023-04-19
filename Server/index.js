@@ -1,57 +1,26 @@
-import Task from "./models/task";
-
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize(
-  `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.URL}:${process.env.PORT}/${process.env.DBNAME}`
-);
-
-const app = express();
+const { databaseTest } = require("./database");
+const taskRoute = require("./routes/task");
 
 const main = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-    // await sequelize.sync({ force: true });
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
+  const app = express();
+  const db = await databaseTest();
+
+  app.use(morgan("tiny"));
+
+  const port = 3000;
+
+  app.use(bodyParser.json());
+  app.use(cors());
+  taskRoute.init(db, app);
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
 };
-
-app.use(morgan("tiny"));
-
-const port = process.env.PORT || 3000;
-
-app.use(bodyParser.json());
-app.use(cors());
-
-app.get("/tasks", async (req, res) => {
-  const tasks = await Task.findAll();
-  res.json(tasks.map((t) => t.toJSON()));
-
-  console.log(tasks);
-});
-
-app.post("/task", async (req, res) => {
-  const { title, completed } = req.body;
-  const task = await Task.create({ title, completed });
-  res.json(task.toJSON());
-});
-
-app.patch("/task/:id", async (req, res) => {
-  const { completed } = req.body;
-  const { id } = req.params;
-  await Task.update({ completed }, { where: { id } });
-  res.end();
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
 
 main();

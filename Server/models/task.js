@@ -1,24 +1,26 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
 
-const Task = sequelize.define("Task", {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  completed: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+const defineTask = (dbClient) => {
+  const Task = dbClient.define("Task", {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    completed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
+  return Task;
+};
 
-module.exports = Task;
+module.exports = defineTask;
