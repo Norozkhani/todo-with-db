@@ -1,4 +1,4 @@
-import Task from "./task";
+import Task from "./models/task";
 
 const express = require("express");
 const cors = require("cors");
