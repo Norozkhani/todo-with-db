@@ -1,5 +1,4 @@
 import Task from "./task";
-
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -37,7 +36,7 @@ app.get("/tasks", async (req, res) => {
 
 app.post("/task", async (req, res) => {
   const { title, completed } = req.body;
-  const task = await Task.create({ title, completed });
+  const task = await Task.create({ title, category, completed });
   res.json(task.toJSON());
 });
 
