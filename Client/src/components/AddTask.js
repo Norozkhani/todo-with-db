@@ -18,22 +18,22 @@ const AddTask = ({ taskLen, createTask }) => {
 
   const submitNewTask = (e) => {
     e.preventDefault();
-    const textInput = document.querySelector("#text");
+    const titleInput = document.querySelector("#title");
     const categoryInput = document.querySelector("#category");
 
-    if (textInput.value && categoryInput.value) {
+    if (titleInput.value && categoryInput.value) {
       createTask({
         id: ++taskLen,
-        text: textInput.value,
+        title: titleInput.value,
         category: categoryInput.value,
         completed: false,
       });
 
-      textInput.value = "";
+      titleInput.value = "";
       categoryInput.value = "";
       handleClose();
     } else {
-      textInput.value
+      titleInput.value
         ? setShowErrorMsg((prev) => ({ ...prev, textErr: false }))
         : setShowErrorMsg((prev) => ({ ...prev, textErr: true }));
       categoryInput.value
@@ -53,7 +53,7 @@ const AddTask = ({ taskLen, createTask }) => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitNewTask}>
-            <input type="text" id="text" name="text" placeholder="Title" />
+            <input type="text" id="title" name="title" placeholder="Title" />
             {showErrorMsg.textErr && <span>Please write a title</span>}
             <input
               type="text"

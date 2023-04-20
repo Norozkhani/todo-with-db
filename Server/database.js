@@ -2,10 +2,12 @@ const { Sequelize } = require("sequelize");
 const defineTask = require("./models/task");
 
 const databaseTest = async () => {
-  const dbClient = new Sequelize(
-    `postgres://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.URL}:${process.env.PORT}/${process.env.DBNAME}`
-  );
-
+  const { USERNAME, PASSWORD, URL, PORT, DBNAME } = process.env;
+  const dbClient = new Sequelize(DBNAME, USERNAME, PASSWORD, {
+    host: URL,
+    port: PORT,
+    dialect: "postgres",
+  });
   try {
     await dbClient.authenticate();
     console.log("Connection has been established successfully.");

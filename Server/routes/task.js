@@ -1,7 +1,7 @@
 const init = (db, app) => {
   app.get("/tasks", handleGet(db));
-  app.post("/task", handlePost(db));
-  // app.patch("/task/:id", handlePatch);
+  app.patch("/task/:id", handlePatch(db));
+  app.post("/tasks", handlePost(db));
 };
 const handleGet = (db) => {
   return async (req, res) => {
@@ -19,11 +19,13 @@ const handlePost = (db) => {
   };
 };
 
-// const handlePatch = async (req, res) => {
-//   const { completed } = req.body;
-//   const { id } = req.params;
-//   await Task.update({ completed }, { where: { id } });
-//   res.end();
-// };
+const handlePatch = (db) => {
+  return async (req, res) => {
+    const { completed } = req.body;
+    const { id } = req.params;
+    const update = await db.Task.update({ completed }, { where: { id } });
+    res.json(update);
+  };
+};
 
 module.exports = { init };
