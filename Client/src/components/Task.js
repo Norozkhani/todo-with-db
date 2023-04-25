@@ -10,13 +10,6 @@ const Task = ({
   replaceTask,
   deleteTask,
 }) => {
-  const [showEditModal, setShowEditModal] = useState(false);
-
-  const handleShowEditModal = () => {
-    activateEditTask(task.id);
-    setShowEditModal(true);
-  };
-
   return (
     <li className="task-wrapper d-flex justify-content-center align">
       <div className="task_TextWrapper">
@@ -24,7 +17,7 @@ const Task = ({
         <p>{task.category}</p>
       </div>
       <div className="edit_CheckWrapper">
-        <Button onClick={handleShowEditModal}>Edit</Button>
+        <Button onClick={() => activateEditTask(task.id)}>Edit</Button>
         <input
           type="checkbox"
           name="completed"
@@ -33,14 +26,6 @@ const Task = ({
           onChange={() => handleCheck(task.id)}
         />
       </div>
-      <EditTask
-        editTask={[task]}
-        replaceTask={replaceTask}
-        deleteTask={deleteTask}
-        show={showEditModal}
-        onHide={() => setShowEditModal(false)}
-        setShow={setShowEditModal}
-      />
     </li>
   );
 };

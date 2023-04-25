@@ -18,6 +18,7 @@ function App() {
     setTasks(data);
   };
 
+  //add task
   const addTask = async (task) => {
     const res = await fetch("http://localhost:3000/tasks", {
       method: "POST",
@@ -45,17 +46,24 @@ function App() {
     );
   };
 
-  const activateEditTask = (id) => {
-    setActiveEditTask(id);
+  //edit tasks
+  const replaceTask = async (task) => {
+    try {
+      await fetch(`http://localhost:3000/task/${task.id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(task),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    const i = tasks.findIndex((t) => t.id === task.id);
+    tasks[i].title = task.title;
+    tasks[i].category = task.category;
+    setTasks([...tasks]);
   };
 
-  const replaceTask = (editedTask) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === editedTask.id ? editedTask : task
-    );
-    setTasks(updatedTasks);
-  };
-
+  //delete tasks
   const deleteTask = (id) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
@@ -73,7 +81,7 @@ function App() {
                 key={task.id}
                 task={task}
                 handleCheck={handleCheck}
-                activateEditTask={activateEditTask}
+                activateEditTask={setActiveEditTask}
                 replaceTask={replaceTask}
                 deleteTask={deleteTask}
               />
@@ -86,23 +94,21 @@ function App() {
                 key={task.id}
                 task={task}
                 handleCheck={handleCheck}
-                activateEditTask={activateEditTask}
+                activateEditTask={setActiveEditTask}
                 replaceTask={replaceTask}
                 deleteTask={deleteTask}
               />
             ))}
           </ul>
 
-          <EditTask
-            editTask={
-              activeEditTask
-                ? tasks.filter((task) => task.id === activeEditTask)
-                : []
-            }
-            replaceTask={replaceTask}
-            deleteTask={deleteTask}
-            onHide={() => setActiveEditTask(null)}
-          />
+          {activeEditTask && (
+            <EditTask
+              editTask={tasks.find((task) => task.id === activeEditTask)}
+              replaceTask={replaceTask}
+              deleteTask={deleteTask}
+              setActivateEditTask={setActiveEditTask}
+            />
+          )}
         </section>
         <div className="particlesContainer">{memoizedParticle}</div>
       </div>

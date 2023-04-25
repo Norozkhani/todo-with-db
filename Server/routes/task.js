@@ -21,9 +21,13 @@ const handlePost = (db) => {
 
 const handlePatch = (db) => {
   return async (req, res) => {
-    const { completed } = req.body;
+    const { title, completed, category } = req.body;
     const { id } = req.params;
-    const update = await db.Task.update({ completed }, { where: { id } });
+    console.log({ title, id, completed, category });
+    const update = await db.Task.update(
+      { title, completed, category },
+      { where: { id } }
+    );
     res.json(update);
   };
 };

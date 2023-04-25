@@ -1,46 +1,44 @@
+import e from "cors";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 const EditTask = ({
   editTask,
   replaceTask,
   deleteTask,
-  show,
-  onHide,
-  setShow,
+  setActivateEditTask,
 }) => {
-  const handleClose = () => setShow(false);
+  const [title, setTitle] = useState(editTask.title);
+  const [category, setCategory] = useState(editTask.category);
 
-  const submitEditTask = (e) => {
+  const handleClose = () => setActivateEditTask(false);
+
+  const submitEditTask = async (e) => {
     e.preventDefault();
-    if (e.target.text.value && e.target.category.value) {
-      replaceTask({
-        id: editTask[0].id,
-        text: e.target.text.value,
-        category: e.target.category.value,
-        completed: editTask[0].completed,
-      });
-      e.target.text.value = "";
-      e.target.category.value = "";
-    }
-    onHide();
+
+    await replaceTask({ ...editTask, title, category });
+    setActivateEditTask(false);
   };
 
   return (
     <section>
-      <Modal show={show} onHide={onHide}>
+      <Modal show="true" onHide={() => setActivateEditTask(null)}>
         <form onSubmit={submitEditTask}>
           <Modal.Header>
             <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               type="text"
-              name="text"
-              defaultValue={editTask.length > 0 ? editTask[0].text : ""}
+              name="title"
+              id="title"
             />
           </Modal.Header>
           <Modal.Body>
             <input
+              value={category}
               type="text"
               name="category"
-              defaultValue={editTask.length > 0 ? editTask[0].category : ""}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -51,7 +49,7 @@ const EditTask = ({
               type="button"
               onClick={() => {
                 handleClose();
-                deleteTask(editTask[0].id);
+                deleteTask(editTask.id);
               }}
             >
               Delete
