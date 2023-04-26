@@ -23,7 +23,7 @@ const Task = ({
           name="completed"
           id="completed"
           checked={task.completed}
-          onChange={() => handleCheck(task.id)}
+          onChange={() => handleCheck(task)}
         />
       </div>
     </li>

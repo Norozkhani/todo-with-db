@@ -2,6 +2,7 @@ const init = (db, app) => {
   app.get("/tasks", handleGet(db));
   app.patch("/task/:id", handlePatch(db));
   app.post("/tasks", handlePost(db));
+  app.delete("/task/:id", handleDelete(db));
 };
 const handleGet = (db) => {
   return async (req, res) => {
@@ -16,6 +17,16 @@ const handlePost = (db) => {
     const task = await db.Task.create({ title, completed, category });
     const data = await task.toJSON();
     res.json(data);
+  };
+};
+
+const handleDelete = (db) => {
+  return async (req, res) => {
+    const { id } = req.params;
+
+    const update = await db.Task.destroy({ where: { id } });
+
+    res.end();
   };
 };
 

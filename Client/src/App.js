@@ -6,7 +6,6 @@ import Particle from "./components/Particle";
 import Task from "./components/Task";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
-import { Container, TabContent } from "react-bootstrap";
 
 function App() {
   const [activeEditTask, setActiveEditTask] = useState(null);
@@ -38,15 +37,13 @@ function App() {
 
   const completedTasks = tasks.filter((task) => task.completed);
   const incompleteTasks = tasks.filter((task) => !task.completed);
-  const handleCheck = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+
+  const handleCheck = async (task) => {
+    task.completed = !task.completed;
+    await replaceTask(task);
   };
 
-  //edit tasks
+  // edit tasks
   const replaceTask = async (task) => {
     try {
       await fetch(`http://localhost:3000/task/${task.id}`, {
@@ -58,16 +55,22 @@ function App() {
       console.error(error);
     }
     const i = tasks.findIndex((t) => t.id === task.id);
-    tasks[i].title = task.title;
-    tasks[i].category = task.category;
+
+    tasks[i] = task;
     setTasks([...tasks]);
   };
-
-  //delete tasks
-  const deleteTask = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
+  // delete tasks
+  const deleteTask = async (task) => {
+    try {
+      await fetch(`http://localhost:3000/task/${task.id}`, {
+        method: "DELETE",
+      });
+      setTasks((prevTasks) => prevTasks.filter((t) => t.id !== task.id));
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <div className="App_Wrapper d-flex align-items-center justify-content-center">
       <div className="App">

@@ -48,8 +48,8 @@ const EditTask = ({
               className="delete-item"
               type="button"
               onClick={() => {
+                deleteTask(editTask);
                 handleClose();
-                deleteTask(editTask.id);
               }}
             >
               Delete
