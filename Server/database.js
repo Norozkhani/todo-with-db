@@ -1,16 +1,22 @@
 const { Sequelize } = require("sequelize");
+const defineTask = require("./models/task");
 
-async function main() {
-  const sequelize = new Sequelize(
-    "postgres://hyper:Rox6kTdcxcRzPeEWB6Ff@104.199.12.40:5432/malena"
-  );
-
+const databaseTest = async () => {
+  const { USERNAME, PASSWORD, URL, PORT, DBNAME } = process.env;
+  const dbClient = new Sequelize(DBNAME, USERNAME, PASSWORD, {
+    host: URL,
+    port: PORT,
+    dialect: "postgres",
+  });
   try {
-    await sequelize.authenticate();
+    await dbClient.authenticate();
     console.log("Connection has been established successfully.");
+    // await sequelize.sync({ force: true });
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
-}
+  const Task = defineTask(dbClient);
+  return { dbClient, Task };
+};
 
-main();
+module.exports = { databaseTest };
