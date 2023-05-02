@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 const defineTask = require("./models/task");
+require("dotenv").config();
 
 const databaseTest = async () => {
   const { USERNAME, PASSWORD, URL, PORT, DBNAME } = process.env;
