@@ -10,6 +10,7 @@ import { useEffect } from "react";
 function App() {
   const [activeEditTask, setActiveEditTask] = useState(null);
   const memoizedParticle = useMemo(() => <Particle />, []);
+  // Get tasks
   const getTasks = async () => {
     const res = await fetch("http://localhost:3000/tasks");
     const data = await res.json();
@@ -38,6 +39,7 @@ function App() {
   const completedTasks = tasks.filter((task) => task.completed);
   const incompleteTasks = tasks.filter((task) => !task.completed);
 
+  // Complete/unComplete Tasks
   const handleCheck = async (task) => {
     task.completed = !task.completed;
     await replaceTask(task);

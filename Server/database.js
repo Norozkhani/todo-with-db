@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const defineTask = require("./models/task");
 require("dotenv").config();
 
+//Connection to the database
 const databaseTest = async () => {
   const { USERNAME, PASSWORD, URL, PORT, DBNAME } = process.env;
   const dbClient = new Sequelize(DBNAME, USERNAME, PASSWORD, {

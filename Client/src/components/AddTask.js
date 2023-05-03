@@ -18,6 +18,7 @@ const AddTask = ({ taskLen, createTask }) => {
     });
   };
 
+  //Function to add task with errorMsg if not complete Title or Category
   const submitNewTask = (e) => {
     e.preventDefault();
 
