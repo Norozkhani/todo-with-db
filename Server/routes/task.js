@@ -4,6 +4,8 @@ const init = (db, app) => {
   app.post("/tasks", handlePost(db));
   app.delete("/task/:id", handleDelete(db));
 };
+
+// This function is to get all the todos in the database
 const handleGet = (db) => {
   try {
     return async (req, res) => {
@@ -15,6 +17,7 @@ const handleGet = (db) => {
   }
 };
 
+//This function is to handle all the new todos added from the client side
 const handlePost = (db) => {
   try {
     return async (req, res) => {
@@ -28,6 +31,7 @@ const handlePost = (db) => {
   }
 };
 
+// This function handles deleting todos
 const handleDelete = (db) => {
   try {
     return async (req, res) => {
@@ -42,6 +46,7 @@ const handleDelete = (db) => {
   }
 };
 
+// This function is to handle editing todos, title, category and completed/not completed
 const handlePatch = (db) => {
   try {
     return async (req, res) => {
