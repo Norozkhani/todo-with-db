@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const { databaseTest } = require("./database");
 const taskRoute = require("./routes/task");
+const authRoute = require("./routes/auth");
 
 const main = async () => {
   const app = express();
@@ -18,6 +19,8 @@ const main = async () => {
   app.use(bodyParser.json());
   app.use(cors());
   taskRoute.init(db, app);
+  authRoute.init(app);
+
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

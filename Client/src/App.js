@@ -10,7 +10,6 @@ import { useEffect } from "react";
 function App() {
   const [activeEditTask, setActiveEditTask] = useState(null);
   const memoizedParticle = useMemo(() => <Particle />, []);
-  // Get tasks
   const getTasks = async () => {
     const res = await fetch("http://localhost:3000/tasks");
     const data = await res.json();
@@ -18,11 +17,19 @@ function App() {
     setTasks(data);
   };
 
+  const getToken = async () => {
+    const res = await fetch("http://localhost:3000/gettoken", {
+      method: "POST",
+    });
+  };
+
   //add task
   const addTask = async (task) => {
     const res = await fetch("http://localhost:3000/tasks", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+      },
       body: JSON.stringify(task),
     });
     const data = await res.json();
@@ -32,6 +39,7 @@ function App() {
 
   useEffect(() => {
     getTasks();
+    getToken();
   }, []);
 
   const [tasks, setTasks] = useState([]);
@@ -39,7 +47,6 @@ function App() {
   const completedTasks = tasks.filter((task) => task.completed);
   const incompleteTasks = tasks.filter((task) => !task.completed);
 
-  // Complete/unComplete Tasks
   const handleCheck = async (task) => {
     task.completed = !task.completed;
     await replaceTask(task);
