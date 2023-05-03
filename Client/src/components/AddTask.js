@@ -7,6 +7,8 @@ const AddTask = ({ taskLen, createTask }) => {
     textErr: false,
     categoryErr: false,
   });
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleClose = () => {
     setShowAddTask(false);
@@ -18,25 +20,23 @@ const AddTask = ({ taskLen, createTask }) => {
 
   const submitNewTask = (e) => {
     e.preventDefault();
-    const titleInput = document.querySelector("#title");
-    const categoryInput = document.querySelector("#category");
 
-    if (titleInput.value && categoryInput.value) {
+    if (title && category) {
       createTask({
         id: ++taskLen,
-        title: titleInput.value,
-        category: categoryInput.value,
+        title: title,
+        category: category,
         completed: false,
       });
 
-      titleInput.value = "";
-      categoryInput.value = "";
+      setTitle("");
+      setCategory("");
       handleClose();
     } else {
-      titleInput.value
+      title
         ? setShowErrorMsg((prev) => ({ ...prev, textErr: false }))
         : setShowErrorMsg((prev) => ({ ...prev, textErr: true }));
-      categoryInput.value
+      category
         ? setShowErrorMsg((prev) => ({ ...prev, categoryErr: false }))
         : setShowErrorMsg((prev) => ({ ...prev, categoryErr: true }));
     }
@@ -53,9 +53,18 @@ const AddTask = ({ taskLen, createTask }) => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitNewTask}>
-            <input type="text" id="title" name="title" placeholder="Title" />
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title"
+            />
             {showErrorMsg.textErr && <span>Please write a title</span>}
             <input
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
               type="text"
               id="category"
               name="category"
